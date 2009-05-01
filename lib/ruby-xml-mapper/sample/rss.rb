@@ -16,8 +16,8 @@
 =begin
 $KCODE ="UTF8"
 require 'rubygems'
-require 'ruby_xml_mapper/libxml'
-require 'ruby_xml_mapper/sample/rss'
+require 'ruby-xml-mapper/libxml'
+require 'ruby-xml-mapper/sample/rss'
 
 rss = RSS::RSS.new_from_xml_file('http://www.reddit.com/r/programming/.rss')
 rss.channel.items.each {|item| puts item.title}; nil

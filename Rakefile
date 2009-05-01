@@ -19,7 +19,7 @@ require 'rake/gempackagetask'
 require 'rubygems/specification'
 
 spec = Gem::Specification.new do |s|
-  s.name          = "ruby_xml_mapper"
+  s.name          = "ruby-xml-mapper"
   s.version       = "1.0.0"
   
   s.platform      = Gem::Platform::RUBY
@@ -36,7 +36,7 @@ spec = Gem::Specification.new do |s|
   s.require_path  = 'lib'
   s.files         = %w(README LICENSE Rakefile) + Dir.glob("{lib,spec,test}/**/*")
   
-  s.add_dependency 'rubymq_facets', '3.0.0'
+  s.add_dependency 'rubymq-facets', '3.0.0'
   s.add_dependency 'libxml-ruby', '>=1.1.3'
 end
 

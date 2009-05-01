@@ -13,7 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
  
-require 'ruby_xml_mapper'
+require 'ruby-xml-mapper'
 require 'rexml/document'
 
 class REXML::Element

@@ -2,7 +2,7 @@ Ruby XML mapper
 ===============
 
 RSS mapping sample:
-http://github.com/senotrusov/ruby-xml-mapper/blob/master/lib/ruby_xml_mapper/sample/rss.rb
+http://github.com/senotrusov/ruby-xml-mapper/blob/master/lib/ruby-xml-mapper/sample/rss.rb
 
 Licensing
 ---------

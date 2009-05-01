@@ -14,7 +14,7 @@
 #  limitations under the License.
  
 
-require 'ruby_xml_mapper'
+require 'ruby-xml-mapper'
 require 'xml/libxml'
 
 module RubyXmlMapper::RubyXmlMapperClassMethods

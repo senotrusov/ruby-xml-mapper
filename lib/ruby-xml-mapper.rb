@@ -16,9 +16,9 @@
 
 # TODO Эта библиотека требует рефакторинга. Стоит выделить маппинг в отдельные объекты, а не держать всё размазанным по исходному классу. Опять же, это сделает проще обратный маппинг - из объектов в XML
 
-require 'rubymq_facets'
-require 'rubymq_facets/core_ext'
-require 'rubymq_facets/more/array'
+require 'rubymq-facets'
+require 'rubymq-facets/core_ext'
+require 'rubymq-facets/more/array'
 
 module RubyXmlMapper
   def self.included model
@@ -222,4 +222,4 @@ module RubyXmlMapper
   end
 end
 
-require 'ruby_xml_mapper/basic_containers'
+require 'ruby-xml-mapper/basic_containers'
