@@ -89,6 +89,9 @@ class RubyXmlMapper::HashOfStringAndNumeric < Hash
       elsif value =~ /\A\s*-*\d+\s*\z/
         value.to_i
 
+      elsif matchdata = value.match(/\A\s*(-*\d+)\s*\.\.\s*(-*\d+)\s*\z/)
+        Range.new(matchdata[1].to_i, matchdata[2].to_i)
+
       elsif value =~ /\A\s*true\s*\z/i
         true
 
