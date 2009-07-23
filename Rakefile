@@ -15,8 +15,8 @@
 
 
 spec = Gem::Specification.new do |s|
-  s.name          = "senotrusov-ruby-xml-mapper"
-  s.version       = "1.0.1"
+  s.name          = "ruby-xml-mapper"
+  s.version       = "1.0.2"
   s.date          = Time.now
   
   s.has_rdoc      = true
