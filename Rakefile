@@ -17,8 +17,10 @@
 spec = Gem::Specification.new do |s|
   s.name          = "senotrusov-ruby-xml-mapper"
   s.version       = "1.0.0"
+  s.date          = Time.now
   
   s.has_rdoc      = true
+  s.rdoc_options  << '--inline-source' << '--charset=UTF-8'
   s.extra_rdoc_files = %w(README LICENSE)
   
   s.summary       = "Mapping XML to Ruby in handy declarative manner using LibXML"
@@ -36,7 +38,7 @@ end
 task :default => [:gemspec]
 
 task :gemspec do
-  File.open("#{spec.name}.gemspec", 'w') do |file|
+  File.open("ruby-xml-mapper.gemspec", 'w') do |file|
     file.write spec.to_ruby
   end
   puts "gemspec created"

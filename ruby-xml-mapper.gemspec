@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["README", "LICENSE"]
   s.files = ["README", "LICENSE", "lib/ruby-xml-mapper", "lib/ruby-xml-mapper/basic_containers.rb", "lib/ruby-xml-mapper.rb", "test/rss.rb"]
   s.homepage = %q{http://github.com/senotrusov}
+  s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.3}
   s.summary = %q{Mapping XML to Ruby in handy declarative manner using LibXML}
