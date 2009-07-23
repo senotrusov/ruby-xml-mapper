@@ -1,12 +1,12 @@
-# 
-#  Copyright 2007-2008 Stanislav Senotrusov <senotrusov@gmail.com>
-# 
+
+#  Copyright 2008-2009 Stanislav Senotrusov <senotrusov@gmail.com>
+#
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
-# 
+#
 #      http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 #  Unless required by applicable law or agreed to in writing, software
 #  distributed under the License is distributed on an "AS IS" BASIS,
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,9 +16,7 @@
 
 # TODO Эта библиотека требует рефакторинга. Стоит выделить маппинг в отдельные объекты, а не держать всё размазанным по исходному классу. Опять же, это сделает проще обратный маппинг - из объектов в XML
 
-require 'rubymq-facets'
-require 'rubymq-facets/core_ext'
-require 'rubymq-facets/more/array'
+require 'libxml'
 
 module RubyXmlMapper
   def self.included model
@@ -133,6 +131,21 @@ module RubyXmlMapper
   
   
   module RubyXmlMapperClassMethods
+    def parse_xml_file(file_name)
+      check_file file_name
+
+      # NOTE: Don't know how to use XML::Document.file correctly.
+      # As in libxml-ruby-1.1.3 it does not close file descriptor, so you end up with "Error: Too many open files."
+      
+      doc = LibXML::XML::Document.string(File.read(file_name))
+
+      # NOTE: If document does not created from file, it leads to "Segmentation fault"
+      # doc.xinclude
+
+      doc.root
+    end
+
+
     def check_file file_name
       unless File.file?(file_name)
         raise "Unable to find file #{file_name.inspect}"
@@ -216,10 +229,11 @@ module RubyXmlMapper
     def register_type_array args
       args[:types] = {}
       args[:type].each do |klass|
-        args[:types][klass.respond_to?(:xml_name) && klass.xml_name || klass.to_s.split('::').last.snake_case] = klass
+        args[:types][klass.respond_to?(:xml_name) && klass.xml_name || klass.to_s.split('::').last.underscore] = klass
       end
     end
   end
 end
 
 require 'ruby-xml-mapper/basic_containers'
+

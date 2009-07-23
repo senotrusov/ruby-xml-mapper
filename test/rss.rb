@@ -1,5 +1,5 @@
-#
-#  Copyright 2007-2008 Stanislav Senotrusov <senotrusov@gmail.com>
+
+#  Copyright 2008-2009 Stanislav Senotrusov <senotrusov@gmail.com>
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 =begin
 $KCODE ="UTF8"
 require 'rubygems'
-require 'ruby-xml-mapper/libxml'
-require 'ruby-xml-mapper/sample/rss'
+require 'ruby-xml-mapper'
 
 rss = RSS::RSS.new_from_xml_file('http://www.reddit.com/r/programming/.rss')
 rss.channel.items.each {|item| puts item.title}; nil

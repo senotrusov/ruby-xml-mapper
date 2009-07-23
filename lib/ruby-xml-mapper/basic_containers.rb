@@ -1,12 +1,12 @@
-# 
-#  Copyright 2007-2008 Stanislav Senotrusov <senotrusov@gmail.com>
-# 
+
+#  Copyright 2008-2009 Stanislav Senotrusov <senotrusov@gmail.com>
+#
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
-# 
+#
 #      http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 #  Unless required by applicable law or agreed to in writing, software
 #  distributed under the License is distributed on an "AS IS" BASIS,
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,11 +38,11 @@ end
 
 class Class
   def self.new_from_xml_attr attr
-    Object.full_const_get(String.new_from_xml_attr(attr))
+    String.new_from_xml_attr(attr).constantize
   end
 
   def self.new_from_xml_node node
-    Object.full_const_get(String.new_from_xml_node(node))
+    String.new_from_xml_node(node).constantize
   end
 end
 
