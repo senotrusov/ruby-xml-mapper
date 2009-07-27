@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby-xml-mapper}
-  s.version = "1.0.2"
+  s.version = "1.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stanislav Senotrusov"]
-  s.date = %q{2009-07-23}
+  s.date = %q{2009-07-27}
   s.email = %q{senotrusov@gmail.com}
   s.extra_rdoc_files = ["README", "LICENSE"]
   s.files = ["README", "LICENSE", "lib/ruby-xml-mapper", "lib/ruby-xml-mapper/basic_containers.rb", "lib/ruby-xml-mapper.rb", "test/rss.rb"]

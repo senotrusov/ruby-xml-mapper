@@ -16,7 +16,7 @@
 
 spec = Gem::Specification.new do |s|
   s.name          = "ruby-xml-mapper"
-  s.version       = "1.0.2"
+  s.version       = "1.0.3"
   s.date          = Time.now
   
   s.has_rdoc      = true
@@ -38,7 +38,7 @@ end
 task :default => [:gemspec]
 
 task :gemspec do
-  File.open("ruby-xml-mapper.gemspec", 'w') do |file|
+  File.open("#{spec.name}.gemspec", 'w') do |file|
     file.write spec.to_ruby
   end
   puts "gemspec created"
