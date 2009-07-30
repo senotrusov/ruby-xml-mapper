@@ -16,7 +16,7 @@
 
 spec = Gem::Specification.new do |s|
   s.name          = "ruby-xml-mapper"
-  s.version       = "1.0.3"
+  s.version       = "1.0.4"
   s.date          = Time.now
   
   s.has_rdoc      = true
@@ -32,14 +32,22 @@ spec = Gem::Specification.new do |s|
   s.files         = %w(README LICENSE) + Dir.glob("{lib,test}/**/*")
   
   s.add_dependency 'libxml-ruby', '>=1.1.3'
+  s.add_dependency 'rails'
 end
 
 
 task :default => [:gemspec]
 
 task :gemspec do
-  File.open("#{spec.name}.gemspec", 'w') do |file|
-    file.write spec.to_ruby
+  specfile = "#{spec.name}.gemspec"
+  
+  if !File.exists?(specfile) || Gem::Specification.load(specfile).version != spec.version
+    File.open("#{spec.name}.gemspec", 'w') do |file|
+      file.write spec.to_ruby
+    end
+    puts "gemspec created"
+  else
+    puts "gemspec was not created - existing gemspec has the same version"
   end
-  puts "gemspec created"
 end
+

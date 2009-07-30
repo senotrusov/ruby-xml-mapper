@@ -14,8 +14,6 @@
 #  limitations under the License.
  
 
-# TODO: Double check .strip - is it needed actually
-
 class String
   def self.new_from_xml_attr attr
     new(attr.value.strip.gsub(/\s*[\r\n]\s*/, "\n"))
@@ -66,22 +64,27 @@ class RubyXmlMapper::Boolean
   end
 end
 
-class RubyXmlMapper::HashOfStringAndNumeric < Hash
-  def self.new_from_xml_node node
-    created = new
-    created.initialize_from_xml_node node
-    created
-  end
+class RubyXmlMapper::Hash < Hash
 
   def initialize_from_xml_node node
     node.each_element do |child|
-      self[child.name.to_sym] = autocast_value(child.content)
+      next if xml_child_mappings.has_key?(child.name)
+      
+      self[child.name.to_sym] = if child.attributes["type"] && respond_to?(cast_method = "cast_to_#{child.attributes["type"]}")
+          __send__(cast_method, child.content)
+        else
+          autocast_value(child.content)
+        end
     end
+    
     node.each_attr do |attr|
+      next if xml_attr_mappings.has_key?(attr.name)
+      
       self[attr.name.to_sym] = autocast_value(attr.value)
     end
   end
 
+  # we're eating copypasta!
   def autocast_value value
       if value =~ /\A\s*-*\d+\.\d+\s*\z/
         value.to_f
@@ -102,6 +105,33 @@ class RubyXmlMapper::HashOfStringAndNumeric < Hash
         value.strip.gsub(/\s*[\r\n]\s*/, "\n").gsub(/\n\s*\n/, "\n")
         
       end
+  end
+  
+  def cast_to_float value
+    value.to_f
+  end
+  
+  def cast_to_integer value
+    value.to_i
+  end
+  
+  def cast_to_range value
+    matchdata = value.match(/\A\s*(-*\d+)\s*\.\.\s*(-*\d+)\s*\z/)
+    Range.new(matchdata[1].to_i, matchdata[2].to_i)
+  end
+  
+  def cast_to_boolean value
+    if value =~ /\A\s*true\s*\z/i
+        true
+    elsif value =~ /\A\s*false\s*\z/i
+      false
+    else
+      nil
+    end
+  end
+  
+  def cast_to_string value
+    value.strip.gsub(/\s*[\r\n]\s*/, "\n").gsub(/\n\s*\n/, "\n")
   end
 end
 

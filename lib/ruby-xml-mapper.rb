@@ -12,13 +12,21 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
- 
 
-# TODO Эта библиотека требует рефакторинга. Стоит выделить маппинг в отдельные объекты, а не держать всё размазанным по исходному классу. Опять же, это сделает проще обратный маппинг - из объектов в XML
+
+# In fact, this is prototype to define requirements.
+#   TODO: refactoring
+#   TODO: Extract mapping to separate object
+#   TODO: More clear caching
+#   TODO: File loading with filesystem restrictions and current directory (based on parent xml directory)
+#   TODO: Use more libxml API 
 
 require 'libxml'
 
 module RubyXmlMapper
+  mattr_accessor :file_cache
+  self.file_cache = {}
+  
   def self.included model
     model.extend RubyXmlMapper::RubyXmlMapperClassMethods
     
@@ -34,22 +42,11 @@ module RubyXmlMapper
     model.xml_child_mappings = {}
   end
 
-  # Source loading is ugly
-  def initialize_from_xml node, load_source = true
+  def initialize_from_xml node
     initialize_from_xml_attr_mapping(node) if xml_attr_mappings.length
-
-    # TODO must not be a magic attribute
-    if @source && load_source
-      unless source_dir_path
-        raise "source_dir_path not defined in #{self.class.inspect}"
-      end
-
-      initialize_from_xml(self.class.parse_xml_file(File.expand_path_restricted(@source, source_dir_path)), false)
-    else
-      initialize_from_xml_child_mapping(node) if xml_child_mappings.length
-      initialize_from_xml_self_mapping(node) if xml_self_mapping
-      initialize_from_xml_content_mapping(node) if xml_content_mapping
-    end
+    initialize_from_xml_child_mapping(node) if xml_child_mappings.length
+    initialize_from_xml_self_mapping(node) if xml_self_mapping
+    initialize_from_xml_content_mapping(node) if xml_content_mapping
   end
   
   private
@@ -157,13 +154,21 @@ module RubyXmlMapper
     end
     
     def new_from_xml_file file_name
-      new_from_xml_node(parse_xml_file(file_name))
+      RubyXmlMapper.file_cache[file_name] ||= new_from_xml_node(parse_xml_file(file_name))
     end
 
     def new_from_xml_node node
-      allocated = allocate
-      allocated.initialize_from_xml node
-      allocated
+      if node.attributes["source"]
+        unless source_dir_path
+          raise "source_dir_path not defined in #{self.class.inspect}"
+        end
+        new_from_xml_file(File.expand_path_restricted(node.attributes["source"], source_dir_path))
+      else        
+        allocated = allocate
+        allocated.initialize_from_xml node
+        allocated.after_initialize if allocated.respond_to?(:after_initialize) 
+        allocated
+      end
     end
 
     def xml args
@@ -207,10 +212,10 @@ module RubyXmlMapper
     def register_self_mapping args
       if args[:type].kind_of?(Array)
         register_type_array(args)
-      elsif args[:type] == :self && self < RubyXmlMapper::HashOfStringAndNumeric
+      elsif args[:type] == :self && self < RubyXmlMapper::Hash
          
       else
-        raise(":type must be kind_of Array or :self with the following supported types: RubyXmlMapper::HashOfStringAndNumeric )")
+        raise(":type must be kind_of Array or :self with the following supported types: RubyXmlMapper::Hash )")
       end
 
       self.xml_self_mapping = args
