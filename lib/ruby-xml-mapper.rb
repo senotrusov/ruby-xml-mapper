@@ -24,7 +24,7 @@
 require 'libxml'
 
 module RubyXmlMapper
-   class CircularReference < StandardError; end
+  class CircularReference < StandardError; end
 end
 
 require 'ruby-xml-mapper/file_cache_item'
