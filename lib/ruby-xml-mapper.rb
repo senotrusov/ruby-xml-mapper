@@ -24,8 +24,15 @@
 require 'libxml'
 
 module RubyXmlMapper
+   class CircularReference < StandardError; end
+end
+
+require 'ruby-xml-mapper/file_cache_item'
+require 'ruby-xml-mapper/file_cache'
+
+module RubyXmlMapper
   mattr_accessor :file_cache
-  self.file_cache = {}
+  self.file_cache = RubyXmlMapper::FileCache.new
   
   def self.included model
     model.extend RubyXmlMapper::RubyXmlMapperClassMethods
@@ -154,7 +161,9 @@ module RubyXmlMapper
     end
     
     def new_from_xml_file file_name
-      RubyXmlMapper.file_cache[file_name] ||= new_from_xml_node(parse_xml_file(file_name))
+      RubyXmlMapper.file_cache.get(file_name) do
+        new_from_xml_node(parse_xml_file(file_name))
+      end
     end
 
     def new_from_xml_node node
