@@ -2,14 +2,14 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby-xml-mapper}
-  s.version = "1.0.5"
+  s.version = "1.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stanislav Senotrusov"]
-  s.date = %q{2009-08-01}
+  s.date = %q{2009-08-06}
   s.email = %q{senotrusov@gmail.com}
   s.extra_rdoc_files = ["README", "LICENSE"]
-  s.files = ["README", "LICENSE", "lib/ruby-xml-mapper", "lib/ruby-xml-mapper/file_cache_item.rb", "lib/ruby-xml-mapper/file_cache.rb", "lib/ruby-xml-mapper/basic_containers.rb", "lib/ruby-xml-mapper.rb", "test/rss.rb"]
+  s.files = ["README", "LICENSE", "lib/ruby-xml-mapper", "lib/ruby-xml-mapper/file_cache_item.rb", "lib/ruby-xml-mapper/file_cache.rb", "lib/ruby-xml-mapper/rss.rb", "lib/ruby-xml-mapper/basic_containers.rb", "lib/ruby-xml-mapper.rb"]
   s.homepage = %q{http://github.com/senotrusov}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]

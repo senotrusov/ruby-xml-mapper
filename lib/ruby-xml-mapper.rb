@@ -136,7 +136,6 @@ module RubyXmlMapper
   
   module RubyXmlMapperClassMethods
     def parse_xml_file(file_name)
-      check_file file_name
 
       # NOTE: Don't know how to use XML::Document.file correctly.
       # As in libxml-ruby-1.1.3 it does not close file descriptor, so you end up with "Error: Too many open files."
@@ -149,7 +148,7 @@ module RubyXmlMapper
       doc.root
     end
 
-
+    # TODO: URL must pass the check
     def check_file file_name
       unless File.file?(file_name)
         raise "Unable to find file #{file_name.inspect}"
