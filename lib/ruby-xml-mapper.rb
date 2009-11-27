@@ -19,9 +19,24 @@
 #   TODO: Extract mapping to separate object
 #   TODO: More clear caching
 #   TODO: File loading with filesystem restrictions and current directory (based on parent xml directory)
-#   TODO: Use more libxml API 
 
-require 'libxml'
+require 'rexml/document'
+ 
+class REXML::Element
+  def each_attr(&block)
+    self.attributes.each_attribute(&block)
+  end
+ 
+  def content
+    children.collect do |child|
+      child.content
+    end.join
+  end
+end
+
+class REXML::Text
+  alias_method :content, :value
+end
 
 module RubyXmlMapper
   class CircularReference < StandardError; end
@@ -56,7 +71,7 @@ module RubyXmlMapper
     initialize_from_xml_content_mapping(node) if xml_content_mapping
   end
   
-  private
+#  private
   
   def initialize_from_xml_attr_mapping node
     node.each_attr do |attr|
@@ -136,16 +151,7 @@ module RubyXmlMapper
   
   module RubyXmlMapperClassMethods
     def parse_xml_file(file_name)
-
-      # NOTE: Don't know how to use XML::Document.file correctly.
-      # As in libxml-ruby-1.1.3 it does not close file descriptor, so you end up with "Error: Too many open files."
-      
-      doc = LibXML::XML::Document.string(File.read(file_name))
-
-      # NOTE: If document does not created from file, it leads to "Segmentation fault"
-      # doc.xinclude
-
-      doc.root
+      REXML::Document.new(File.read(file_name)).root
     end
 
     # TODO: URL must pass the check
@@ -186,7 +192,7 @@ module RubyXmlMapper
     end
     
     
-    private
+#    private
     
     def register_attr_mapping args
       args[:reader_method] = args[:attr]

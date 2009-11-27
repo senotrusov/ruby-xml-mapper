@@ -13,41 +13,20 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-
-spec = Gem::Specification.new do |s|
-  s.name          = "ruby-xml-mapper"
-  s.version       = "1.0.6"
-  s.date          = Time.now
+begin
+  require 'jeweler'
   
-  s.has_rdoc      = true
-  s.rdoc_options  << '--inline-source' << '--charset=UTF-8'
-  s.extra_rdoc_files = %w(README LICENSE)
-  
-  s.summary       = "Mapping XML to Ruby in handy declarative manner using LibXML"
-  s.author        = "Stanislav Senotrusov"
-  s.email         = "senotrusov@gmail.com"
-  s.homepage      = "http://github.com/senotrusov"
-  
-  s.require_path  = 'lib'
-  s.files         = %w(README LICENSE) + Dir.glob("{lib,test}/**/*")
-  
-  s.add_dependency 'libxml-ruby', '>=1.1.3'
-  s.add_dependency 'rails'
-end
-
-
-task :default => [:gemspec]
-
-task :gemspec do
-  specfile = "#{spec.name}.gemspec"
-  
-  if !File.exists?(specfile) || Gem::Specification.load(specfile).version != spec.version
-    File.open("#{spec.name}.gemspec", 'w') do |file|
-      file.write spec.to_ruby
-    end
-    puts "gemspec created"
-  else
-    puts "gemspec was not created - existing gemspec has the same version"
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "ruby-xml-mapper"
+    gemspec.summary = "Mapping XML to Ruby in handy declarative manner"
+    gemspec.email = "senotrusov@gmail.com"
+    gemspec.homepage = "http://github.com/senotrusov/ruby-xml-mapper"
+    gemspec.authors = ["Stanislav Senotrusov"]
   end
+  
+  Jeweler::GemcutterTasks.new
+  
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install jeweler"
 end
 
