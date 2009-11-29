@@ -17,7 +17,7 @@ limitations under the License.
 Ruby XML mapper
 ===============
 
-Sample of RSS mapping:
+RSS mapping sample:
 
-  http://github.com/senotrusov/ruby-xml-mapper/blob/master/test/rss.rb
+  http://github.com/senotrusov/ruby-xml-mapper/blob/master/lib/ruby-xml-mapper/rss.rb
 
