@@ -38,6 +38,10 @@ class REXML::Text
   alias_method :content, :value
 end
 
+
+require 'ruby-xml-mapper/file_expand_path_restricted.rb'
+
+
 module RubyXmlMapper
   class CircularReference < StandardError; end
 end
