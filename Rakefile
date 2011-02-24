@@ -19,7 +19,7 @@ begin
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "ruby-xml-mapper"
     gemspec.summary = "Mapping XML to Ruby in handy declarative manner"
-    gemspec.email = "stas@senotrusov.com"
+    gemspec.email = "stan@senotrusov.com"
     gemspec.homepage = "http://github.com/senotrusov/ruby-xml-mapper"
     gemspec.authors = ["Stanislav Senotrusov"]
   end
