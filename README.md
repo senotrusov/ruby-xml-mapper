@@ -1,8 +1,6 @@
 # Ruby XML mapper
 
-RSS mapping sample:
-
-  http://github.com/senotrusov/ruby-xml-mapper/blob/master/lib/ruby-xml-mapper/rss.rb
+Please see the [RSS mapping sample](lib/ruby-xml-mapper/rss.rb).
 
 
 ## Copyright and License
